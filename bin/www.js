@@ -10,7 +10,7 @@ app.set('port', port);
 var server = http.createServer(app);
 
 
-server.listen(port, function (err, restult) {
+server.listen(port,  (err, restult)=> {
       if (!err) {
         console.log('server is running at port', app.get('port'))
       }
