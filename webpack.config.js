@@ -22,6 +22,12 @@ loaders.push({
     exclude: 'node_modules',
     loader: 'vue'
 })
+//处理 css
+loaders.push({
+    test: /\.css$/,
+    exclude: /^node_modules$/,
+    loader: 'style-loader!css-loader'
+})
 
 
 if (process.env.NODE_ENV == 'production') { //生产环境
@@ -37,7 +43,7 @@ if (process.env.NODE_ENV == 'production') { //生产环境
     }))
 }
 
-
+plugins.push(new ExtractTextPlugin('[name].css')) //css单独打包
 module.exports = {
     entry: './src/main.js',
     output: {

@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon ./bin/www",
-    "dev": "node webpackServer.js",
-      "dist": "cross-env NODE_ENV=production webpack -p"
+    "dev": "nodemon ./webpackServer.js ",
+    "dist": "cross-env NODE_ENV=production webpack -p"
   },
   "repository": {
     "type": "git",
