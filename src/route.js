@@ -1,5 +1,7 @@
 
  import index from './component/index.vue'
+ import login from './component/login.vue'
+ import register from './component/register.vue'
 
 
 
@@ -18,6 +20,14 @@ export default {
                     data: {}
                 },
                 component: index
+            },
+            '/login':{
+                auth:false,
+                component:login
+            },
+            '/register':{
+                auth:false,
+                component:register
             }
         }
     }

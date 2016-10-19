@@ -1,17 +1,23 @@
 
 <template>
 <v-header></v-header>
-    <h2>app.vue</h2>
-    <h1>ceshi</h1>
-     <router-view></router-view>
-
+{{user.name}}
+<router-view></router-view>
 </template>
 <script>
-import components from './component/common/'
+import components from './component/common/';
+ import store from './vuex/store'
    export default {
+   store,
     components,
-        ready(){
+    vuex: {
+            getters: {
+                user: state => state.user
+            }
+    },
+     ready(){
           console.log('app ready');
-        }
+          console.log(this.user.name);
+            }
     }
 </script>
