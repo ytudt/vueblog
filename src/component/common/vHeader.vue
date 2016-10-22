@@ -51,8 +51,6 @@
 import menus from '../../config/menus.js'
   import store from '../../vuex/store'
     import actions from '../../actions/'
-console.log('menus');
-console.log(menus);
   export default{
       store,
         vuex: {
@@ -69,8 +67,6 @@ console.log(menus);
       }
     },
     ready(){
-
-      console.log('vheader');
     }
   }
 </script>
