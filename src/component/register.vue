@@ -7,7 +7,7 @@
   </tr>
     <tr>
     <td>密码</td>
-    <td><input placeholder="密码" type="text"  v-model="password"></td>
+    <td><input placeholder="密码" type="text"  v-model="passWord"></td>
   </tr>
     <tr>
     <td>确认密码</td>
@@ -75,22 +75,22 @@ export default{
   data(){
     return{
     userName:'',
-    password:'',
-    rePassword:''
+    passWord:'',
+    repassWord:''
     }
   },
   methods:{
     clearInput(){
       this.userName='';
-      this.password='';
-      this.rePassword='';
+      this.passWord='';
+      this.repassWord='';
     },
     submitLogin(){
       console.log(222)
       let vm=this;
       let registerPromise=fectchDate.doRegister(vm,'/doRegister',{
         userName:vm.userName,
-        password:vm.password
+        passWord:vm.passWord
       },{})
       registerPromise.then(function(data){
         console.log(data);

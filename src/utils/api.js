@@ -24,6 +24,8 @@ FectchDate.prototype.doRegister = function(vm,url,body,options) {
   console.log(333);
     return new Promise((resolve, reject) => {
       console.log(that.serverUrl+url)
+      console.log(body)
+      console.log(options)
        vm.$http.post(that.serverUrl+url, body, options).then(resolve, reject);
     })
 }

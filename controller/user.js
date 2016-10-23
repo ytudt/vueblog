@@ -1,6 +1,26 @@
 'use strict'
-const user={};
-user.doRegister=(req,res,next)=>{
-console.log('35q3543qw5');
+const User = require('../models').User;
+const Tools = require('../utils/index.js');
+// const user={};
+// user.doRegister=(req,res,next)=>{
+// console.log('35q3543qw5');
+// }
+// module.exports=user
+exports.doRegister = (req,res,next) => {
+    let userName = req.body.userName || '';
+    console.log("======================"+req.body.userName);
+    console.log("======================"+req.body.passWord);
+    let passWord = Tools.md5(req.body.passWord || '');
+    // Logger.debug(passWord);
+    let email = req.body.email || 'www.baidu.com';
+    let registerPromise=User.newAndSave(userName, passWord, email);
+    registerPromise.then((data)=>{
+      console.log(data);
+      res.send({
+        statusCode:200
+      });
+    },(err)=>{
+      next(err);
+      console.log(err);
+    });
 }
-module.exports=user
