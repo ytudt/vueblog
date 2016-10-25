@@ -14,9 +14,10 @@ var mutationss = {
     SIDE_BAR_HIDE(state) {
         state.sideBar = false //关闭菜单
     },
-    SIGNIN(state, user) {
+    loginSuccess(state, user) {
         state.user = user
-        Tool.localItem('user', JSON.stringify(user))
+        console.log(JSON.stringify(user));
+        // Tool.localItem('user', JSON.stringify(user))
     },
     SIGNOUT(state) {
         state.user = {}

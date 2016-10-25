@@ -3,7 +3,6 @@
 var states = {}
 
 states.user =  {
-  name:'dt'
 } //当前登录的用户信息
 
 

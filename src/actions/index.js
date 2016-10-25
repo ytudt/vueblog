@@ -11,8 +11,10 @@ export default (...arg) => {
             SIDE_BAR_HIDE({ dispatch }) { //隐藏菜单
                 dispatch('SIDE_BAR_HIDE')
             },
-            SIGNIN({ dispatch }, user) { //登录
-                dispatch('SIGNIN', user)
+            loginSuccess({ dispatch }, user) { //登录
+                console.log('action'+user);
+                console.log(user);
+                dispatch('loginSuccess', user)
             },
             SIGNOUT({ dispatch }) { //退出
                 dispatch('SIGNOUT')
