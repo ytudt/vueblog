@@ -10,9 +10,10 @@ exports.doRegister = (req,res,next) => {
     let userName = req.body.userName || '';
     console.log("======================"+req.body.userName);
     console.log("======================"+req.body.passWord);
+    console.log("======================"+req.body.email);
     let passWord = Tools.md5(req.body.passWord || '');
     // Logger.debug(passWord);
-    let email = req.body.email || 'www.baidu.com';
+    let email = req.body.email || '';
     let registerPromise=User.newAndSave(userName, passWord, email);
     registerPromise.then((data)=>{
       console.log(data);

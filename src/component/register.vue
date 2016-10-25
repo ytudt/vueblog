@@ -5,8 +5,12 @@
     <td>用户名</td>
     <td><input  placeholder="用户名" type="text" v-model="userName"></td>
   </tr>
+  <tr>
+    <td>邮密&emsp;箱</td>
+    <td><input  placeholder="邮箱" type="text" v-model="email"></td>
+  </tr>
     <tr>
-    <td>密码</td>
+    <td>密&emsp;码</td>
     <td><input placeholder="密码" type="text"  v-model="passWord"></td>
   </tr>
     <tr>
@@ -75,6 +79,7 @@ export default{
   data(){
     return{
     userName:'',
+    email:'',
     passWord:'',
     repassWord:''
     }
@@ -82,6 +87,7 @@ export default{
   methods:{
     clearInput(){
       this.userName='';
+      this.email='';
       this.passWord='';
       this.repassWord='';
     },
@@ -90,6 +96,7 @@ export default{
       let vm=this;
       let registerPromise=fectchDate.doRegister(vm,'/doRegister',{
         userName:vm.userName,
+        email:vm.email,
         passWord:vm.passWord
       },{})
       registerPromise.then(function(data){
