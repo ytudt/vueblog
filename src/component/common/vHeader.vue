@@ -13,6 +13,7 @@
   <button class="fr" v-link="'/login'">登录</button>
 </div>
 </header>
+<div>{{user}}</div>
 </template>
 <style scoped>
   .header{

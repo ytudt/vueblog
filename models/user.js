@@ -3,40 +3,34 @@ const models = require('../db');
 const User = models.User;
 const Q = require('q');
 
-// 添加一个用户
-exports.newAndSave = function(userName, passWord, email) {
-  console.log('models');
+/**
+ * 添加用户
+ * Callback:
+ * - err, 数据库异常
+ * - user, 用户
+ * @param {String} userName 登录名
+ * @param {String} passWord 密码
+ * @param {String} email 邮箱
+ */
+exports.newAndSave = (userName, passWord, email) => {
     var defer = Q.defer();
     let user = new User();
     user.userName = userName;
     user.passWord = passWord;
     user.email = email;
-    user.save((err,data)=>{
-      console.log('models data');
-      if(err){
-         defer.reject(err);
-       }else{
-        // console.log();
-        defer.resolve(data);
-       }
-
-    });
-
-    return defer.promise;
-};
-// q封装版添加用户
-exports.qNewAndSave = function(lologinname, passWord, email) {
-    var defer = Q.defer();
-    newAndSave(lologinname, passWord, email, function(error, data) {
-        if (!error) {
+    user.save((err, data) => {
+        if (!err) {
             defer.resolve(data);
-        } else {
 
+        } else {
             defer.reject(err);
         }
+
     });
+
     return defer.promise;
 };
+
 
 /**
  * 根据登录名查找用户
@@ -46,26 +40,39 @@ exports.qNewAndSave = function(lologinname, passWord, email) {
  * @param {String} loginname 登录名
  * @param {Function} callback 回调函数
  */
-let getUserByloginname = function(loginname, callback) {
-    User.findOne({ loginname: loginname }, callback);
-};
-var obj = {
-        name: 'dt'
-    }
-    // 用q封装版根据登录名查找用户
-exports.qGetUserByloginname = function(lologinname) {
+exports.getUserByLoginName = (userName) => {
     var defer = Q.defer();
-    getUserByloginname(lologinname, function(error, data) {
-        // console.log('第一步的数据'+data)
-        // console.log(error)
-        if (!error) {
+    User.findOne({ 'userName':userName }, function(err, data) {
+        if (!err) {
+            console.log('yonghuming'+data)
             defer.resolve(data);
         } else {
             defer.reject(err);
         }
+
     });
     return defer.promise;
 };
+/**
+ * 根据登邮箱查找用户
+ * Callback:
+ * - err, 数据库异常
+ * @param {String} email 登录名
+ */
+exports.getUserByEmail = (email) => {
+    var defer = Q.defer();
+    User.findOne({ 'email':email }, function(err, data) {
+        if (!err) {
+            console.log('youxiagn'+data);
+            defer.resolve(data);
+        } else {
+            defer.reject(err);
+        }
+
+    });
+    return defer.promise;
+};
+
 
 /**
  * 根据用户ID，查找用户
@@ -114,17 +121,11 @@ exports.qGetUserByMail = function(email) {
  * @param {Function} callback 回调函数
  */
 exports.setAvatar = function(lologinname, newPath, callback) {
-    // console.log(1);
-    // console.log(lologinname);
-    // console.log(avatar);
-    // console.log(data);
     getUserByloginname(lologinname, function(err, data) {
             if (err || !data) {
                 return callback(err);
             }
             data.avatar = newPath;
-            console.log('avatar');
-            console.log(data);
             data.save(callback)
         })
         // let user = new User();
