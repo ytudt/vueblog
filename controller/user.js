@@ -1,6 +1,7 @@
 'use strict'
 const User = require('../models').User;
 const Tools = require('../utils/index.js');
+const Q = require('q');
 
 exports.doRegister = (req, res, next) => {
     let userName = req.body.userName || '';
@@ -9,43 +10,52 @@ exports.doRegister = (req, res, next) => {
     let getUserByLoginNamePromise = User.getUserByLoginName(userName);
     getUserByLoginNamePromise
         .then(function(data) {
-          console.log('用户名结果'+data);
-            return data;
-        })
-        .then(function(data) {
             if (data) {
                 res.send({
-                    statusCode: 400,
-                    reason: 'userName is exsited'
-                });
+                      statusCode: 400,
+                      reason: 'userName is exsited'
+                  });
+                console.log(data);
+                return  Q.defer().promise;
             } else {
-                let getUserByEmailPromise = User.getUserByEmail(email);
-                getUserByEmailPromise.then(function(data) {
-                  console.log('邮箱结果'+data);
-                    return data
-                });
+                return User.getUserByEmail(email)
             }
         })
         .then(function(data) {
-            console.log(data);
+            console.log('+++++++' + data)
             if (data) {
                 res.send({
                     statusCode: 401,
                     reason: 'email is exsited'
                 });
-            } else {
-                let registerPromise = User.newAndSave(userName, passWord, email);
-                registerPromise
-                    .then((data) => {
-                        console.log(data);
-                        res.send({
-                            statusCode: 200,
-                            userName
-                        });
-                    }, (err) => {
-                        next(err);
-                        console.log(err);
-                    });
+                 return  Q.defer().promise;
             }
+             else {
+
+            }
+        })
+        .then(function(data) {
+            console.log('=======' + data);
+            if (data) {
+                // res.send({
+                //     statusCode: 401,
+                //     reason: 'email is exsited'
+                // });
+            } else {
+                // let registerPromise = User.newAndSave(userName, passWord, email);
+                // registerPromise
+                //     .then((data) => {
+                //         console.log(data);
+                //         res.send({
+                //             statusCode: 200,
+                //             userName
+                //         });
+                //     }, (err) => {
+                //         next(err);
+                //         console.log(err);
+                //     });
+            }
+        }).catch(function(err) {
+            console.log(error);
         })
 }

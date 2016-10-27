@@ -13,7 +13,7 @@ const Q = require('q');
  * @param {String} email 邮箱
  */
 exports.newAndSave = (userName, passWord, email) => {
-    var defer = Q.defer();
+    let defer = Q.defer();
     let user = new User();
     user.userName = userName;
     user.passWord = passWord;
@@ -44,7 +44,7 @@ exports.getUserByLoginName = (userName) => {
     var defer = Q.defer();
     User.findOne({ 'userName':userName }, function(err, data) {
         if (!err) {
-            console.log('yonghuming'+data)
+            // console.log('yonghuming'+data)
             defer.resolve(data);
         } else {
             defer.reject(err);
