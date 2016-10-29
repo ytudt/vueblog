@@ -1,3 +1,4 @@
+'use strict'
 const moment = require('moment');
 const md5 = require('md5');
 const config = require('../config/config.js');
@@ -20,3 +21,10 @@ exports.formatDate = function(date, friendly) {
 exports.md5 = function(message) {
   return md5(message + config.key)
 }
+class BreakSignal {
+    constructor(statusCode, reason) {
+        this.statusCode = statusCode;
+        this.reason = reason;
+    }
+}
+exports.BreakSignal=BreakSignal;
