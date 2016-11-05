@@ -7,5 +7,5 @@ module.exports={
   db: 'mongodb://127.0.0.1/vueblog',
   key:'vueblog',
   secret:'dt',//session 秘钥
-  avatar:'./defaltAvatar.png'//默认头像路径
+  avatar:'./userAvatar/defaltAvatar.png'//默认头像路径
 }

@@ -21,3 +21,17 @@ body:{
 - 500 服务器错误
 
 ### 2.登录
+请求
+ ```
+method:post
+url:http://{{serverRoot}}/api/doLogin
+body:{
+    userName:vm.userName,(6-16位字母数字下划线活邮箱)
+    passWord:vm.passWord(6-16位字母数字下划线)
+ }
+ ```
+响应
+- 200 成功
+- 400 密码错误
+- 404 用户名不存在
+- 500 服务器错误

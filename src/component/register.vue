@@ -1,5 +1,6 @@
 <template>
-<div class="loginWrap md">
+<div class="registerWrap md">
+<div v-show="errorMsg" class='errorMsg'>{{errorMsg}}</div>
   <table>
   <tr>
     <td>用户名</td>
@@ -55,6 +56,15 @@
   height: 100;*/
   /*position: relative;*/
 }
+.errorMsg{
+   background: #fcdede;
+    color: #911;
+    text-align: center;
+    line-height: 40px;
+    font-size: 30px;
+    border-radius: 5px;
+    margin: 0 50px;
+}
 
 table td
 {
@@ -95,10 +105,7 @@ input{
   color: #3879d9;
 }
 .errorWarn{
-
-
   color: #911;
-
   height: 10px;
 }
 .errorWarn div{
@@ -108,7 +115,6 @@ input{
      padding: 5px;
      line-height: 30px;
 }
-
 </style>
 <script>
 import Tools from '../utils/tools.js';
@@ -122,6 +128,7 @@ export default{
     email:'',
     passWord:'',
     rePassWord:'',
+    errorMsg:'',
     userNameError:false,
     emailError:false,
     passWordError:false,
@@ -164,14 +171,37 @@ export default{
         return;
        }
        if(!vm.userNameError&&!vm.emailError&&!vm.passWordError&&!vm.rePassWordError&&vm.passWord==vm.rePassWord){
-        let registerPromise=fectchDate.doRegister(vm,'/doRegister',{
+        let registerPromise=fectchDate.doPost(vm,'/doRegister',{
         userName:vm.userName,
         email:vm.email,
         passWord:vm.passWord
       },{})
       registerPromise.then(function(data){
-        if(data.body.statusCode==200){
-          vm.loginSuccess(data.body);
+        switch(data.body.statusCode){
+          case 200:
+          vm.errorMsg='';
+           vm.loginSuccess(data.body.user);
+           break;
+           case 400:
+           vm.errorMsg='用户名存在';
+           break;
+            case 401:
+           vm.errorMsg='邮箱存在';
+           break;
+            case 402:
+           vm.errorMsg='用户名格式错误';
+           break;
+           case 403:
+           vm.errorMsg='邮箱格式错误';
+           break;
+            case 404:
+           vm.errorMsg='密码格式错误';
+           break;
+            case 500:
+           vm.errorMsg='注册失败';
+           break;
+           default:
+           break;
         }
       },function(error){});
        }

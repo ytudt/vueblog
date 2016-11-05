@@ -21,9 +21,9 @@ let strategies = {
             }
 
         },
-        isGegEmail: (value,errorMsg) => {
-          let reg = /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/;
-          // let reg = /^[a-zA-z]\w{10,15}$/;
+        isGegEmail: (value, errorMsg) => {
+            let reg = /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/;
+            // let reg = /^[a-zA-z]\w{10,15}$/;
             if (!reg.test(value)) {
                 return errorMsg
             }
@@ -35,7 +35,7 @@ class Validator {
         this.cache = [];
     }
     add(value, rules) {
-        let that =this;
+        let that = this;
         for (let i = 0, rule; rule = rules[i++];) {
             (function(rule) {
                 let strategyAry = rule.strategy.split(':');
@@ -61,21 +61,21 @@ class Validator {
 
 
 //注册验证函数
-exports.registerValidataFunc=(userName,email,passWord)=>{
-  let validator=new Validator();
-  validator.add(userName,[{
-    strategy:'isGegUser',
-    errorMsg:402//用户名格式错误
-  }]);
-  validator.add(email,[{
-    strategy:'isGegEmail',
-    errorMsg:403//邮箱格式错误
-  }]);
-  validator.add(passWord,[{
-    strategy:'isGegPassWord',
-    errorMsg:404//密码格式错误
-  }]);
-  let errorMsg=validator.start();
-  return errorMsg;
-}
-//登录验证函数
+exports.registerValidataFunc = (userName, email, passWord) => {
+        let validator = new Validator();
+        validator.add(userName, [{
+            strategy: 'isGegUser',
+            errorMsg: 402 //用户名格式错误
+        }]);
+        validator.add(email, [{
+            strategy: 'isGegEmail',
+            errorMsg: 403 //邮箱格式错误
+        }]);
+        validator.add(passWord, [{
+            strategy: 'isGegPassWord',
+            errorMsg: 404 //密码格式错误
+        }]);
+        let errorMsg = validator.start();
+        return errorMsg;
+    }
+    //登录验证函数

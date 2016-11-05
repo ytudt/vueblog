@@ -8,12 +8,17 @@
   {{menu.title}}
 </li>
 </ul>
-<div>
+<div v-show="!user.userName">
   <button class="fr" v-link="'/register'">注册</button>
   <button class="fr" v-link="'/login'">登录</button>
 </div>
+<div class="userInfo" v-show="user.userName" v-link="'/userInfo'">
+<span>欢迎:{{user.userName}}</span>
+<img  :src='user.avatar' alt="我的头像">
+<!-- <img :src='userAvatar' alt="我的头像"> -->
+</div>
 </header>
-<div>{{user}}</div>
+
 </template>
 <style scoped>
   .header{
@@ -22,7 +27,7 @@
     background: rgba(0,0,0,.5);
   }
   .header .menus{
-    width:calc(100% - 150px);
+    width:calc(100% - 300px);
     height: 100%;
     display: inline-block;
   }
@@ -47,6 +52,19 @@
       padding: 0 15px;
       border-radius: 5px;
     }
+    .userInfo{
+      display: inline-block;
+      height: 100%;
+    }
+    .userInfo span{
+      color: blue;
+      cursor:  pointer;
+
+    }
+    .userInfo img{
+    height: 100%;
+    margin-left: 20px;
+    }
 </style>
 <script>
 import menus from '../../config/menus.js'
@@ -57,6 +75,7 @@ import menus from '../../config/menus.js'
         vuex: {
             getters: {
                 user: state => state.user
+
                 // state: state => state[name]
             },
             actions: actions()
@@ -64,7 +83,9 @@ import menus from '../../config/menus.js'
 
     data(){
       return{
-        menus
+        menus,
+        userAvatar:'../userAvatar/defaltAvatar.png'
+
       }
     },
     ready(){

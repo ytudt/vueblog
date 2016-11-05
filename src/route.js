@@ -2,6 +2,7 @@
  import index from './component/index.vue'
  import login from './component/login.vue'
  import register from './component/register.vue'
+ import userInfo from './component/userInfo.vue'
 
 
 
@@ -28,6 +29,10 @@ export default {
             '/register':{
                 auth:false,
                 component:register
+            },
+             '/userInfo':{
+                auth:true,
+                component:userInfo
             }
         }
     }
