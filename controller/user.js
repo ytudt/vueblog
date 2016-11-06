@@ -22,7 +22,7 @@ exports.doRegister = (req, res, next) => {
         return;
     }
     getUserByLoginNamePromise
-        .then((data)=> {
+        .then((data) => {
             if (data) {
                 throw new BreakSignal(400, 'userName is exsited');
 
@@ -30,7 +30,7 @@ exports.doRegister = (req, res, next) => {
                 return User.getUserByEmail(email)
             }
         })
-        .then((data)=> {
+        .then((data) => {
             console.log('+++++++' + data)
             if (data) {
                 throw new BreakSignal(401, 'email is exsited');
@@ -38,10 +38,10 @@ exports.doRegister = (req, res, next) => {
                 return User.newAndSave(userName, passWord, email)
             }
         })
-        .then((data)=> {
+        .then((data) => {
             console.log('插入结果' + data);
             if (data) {
-                req.session.userInfo =data;
+                req.session.userInfo = data;
                 res.json({
                     statusCode: 200,
                     user: data
@@ -49,7 +49,7 @@ exports.doRegister = (req, res, next) => {
             } else {
                 throw new BreakSignal(500, 'insert error');
             }
-        }).catch((err)=> {
+        }).catch((err) => {
             if (err.statusCode) {
                 res.json({
                     statusCode: err.statusCode,
@@ -74,27 +74,27 @@ exports.doLogin = (req, res, next) => {
 
     Q.all([
             User.getUserByLoginName(userName), User.getUserByEmail(userName)
-        ]).then((data)=> {
+        ]).then((data) => {
             // console.log('***一介布衣博客:***', result);
             let result = data[0] || data[1];
             console.log(data);
             if (result) {
                 if (passWord === result.passWord) {
-                      req.session.userInfo =result;
+                    req.session.userInfo = result;
 
                     res.json({
                         statusCode: 200,
                         user: result
 
                     })
-                }else{
-                       res.json({
+                } else {
+                    res.json({
                         statusCode: 400,
                         reason: 'passWord is wrong'
 
                     })
                 }
-            }else{
+            } else {
                 res.json({
                     statusCode: 404,
                     reason: 'user is not exit'
@@ -102,17 +102,21 @@ exports.doLogin = (req, res, next) => {
             }
 
         })
-        .catch((err)=>{
-               next(err);
+        .catch((err) => {
+            next(err);
         });
 
 }
 exports.exitBlog = (req, res, next) => {
-   if(req.session.userInfo){
-    req.session.userInfo='';
-    res.send({
-        statusCode:200
-    });
-   }
+    if (req.session.userInfo) {
+        req.session.userInfo = '';
+        res.send({
+            statusCode: 200
+        });
+    } else {
+        res.send({
+            statusCode: 404
+        });
+    }
 
 }
