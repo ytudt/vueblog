@@ -181,6 +181,7 @@ export default{
           case 200:
           vm.errorMsg='';
            vm.loginSuccess(data.body.user);
+           vm.$router.go('/');
            break;
            case 400:
            vm.errorMsg='用户名存在';

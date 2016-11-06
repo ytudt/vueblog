@@ -41,6 +41,7 @@ exports.doRegister = (req, res, next) => {
         .then((data)=> {
             console.log('插入结果' + data);
             if (data) {
+                req.session.userInfo =data;
                 res.json({
                     statusCode: 200,
                     user: data
@@ -79,6 +80,8 @@ exports.doLogin = (req, res, next) => {
             console.log(data);
             if (result) {
                 if (passWord === result.passWord) {
+                      req.session.userInfo =result;
+
                     res.json({
                         statusCode: 200,
                         user: result
@@ -97,61 +100,19 @@ exports.doLogin = (req, res, next) => {
                     reason: 'user is not exit'
                 })
             }
-            // if (!result) {
 
-            // }
         })
         .catch((err)=>{
                next(err);
         });
-        // //验证用户名邮箱密码格式
-        // let errorMsg = ValidataFunc.registerValidataFunc(userName, email, req.body.passWord);
-        // if (errorMsg) {
-        //     res.json({
-        //         statusCode: errorMsg,
-        //         reason: 'formate error'
-        //     });
-        //     return;
-        // }
-        // getUserByLoginNamePromise
-        //     .then(function(data) {
-        //         if (data) {
-        //             throw new BreakSignal(400, 'userName is exsited');
 
-    //         } else {
-    //             return User.getUserByEmail(email)
-    //         }
-    //     })
-    //     .then(function(data) {
-    //         console.log('+++++++' + data)
-    //         if (data) {
-    //             throw new BreakSignal(401, 'email is exsited');
-    //         } else {
-    //             return User.newAndSave(userName, passWord, email)
-    //         }
-    //     })
-    //     .then(function(data) {
-    //         console.log('插入结果' + data);
-    //         if (data) {
-    //             res.json({
-    //                 statusCode: 200,
-    //                 user: data
-    //             })
-    //         } else {
-    //             throw new BreakSignal(500, 'insert error');
-    //         }
-    //     }).catch(function(err) {
-    //         if (err.statusCode) {
-    //             res.json({
-    //                 statusCode: err.statusCode,
-    //                 reason: err.reason
-    //             })
-    //         } else {
-    //             res.json({
-    //                 statusCode: 500,
-    //                 reason: 'server error'
-    //             })
-    //         }
+}
+exports.exitBlog = (req, res, next) => {
+   if(req.session.userInfo){
+    req.session.userInfo='';
+    res.send({
+        statusCode:200
+    });
+   }
 
-    //     })
 }

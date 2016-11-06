@@ -142,24 +142,13 @@ export default{
           case 200:
           vm.errorMsg='';
            vm.loginSuccess(data.body.user);
+          vm.$router.go('/');
            break;
            case 400:
-           vm.errorMsg='用户名存在';
+           vm.errorMsg='密码错误';
            break;
-            case 401:
-           vm.errorMsg='邮箱存在';
-           break;
-            case 402:
-           vm.errorMsg='用户名格式错误';
-           break;
-           case 403:
-           vm.errorMsg='邮箱格式错误';
-           break;
-            case 404:
-           vm.errorMsg='密码格式错误';
-           break;
-            case 500:
-           vm.errorMsg='注册失败';
+           case 404:
+           vm.errorMsg='用户名或邮箱不存在';
            break;
            default:
            break;

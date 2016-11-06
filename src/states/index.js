@@ -4,7 +4,7 @@ var states = {}
 
 states.user =  {
 } //当前登录的用户信息
-
+states.articleList=[];
 
 
 // /**

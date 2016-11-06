@@ -3,6 +3,7 @@
  import login from './component/login.vue'
  import register from './component/register.vue'
  import userInfo from './component/userInfo.vue'
+ import article from './component/article.vue'
 
 
 
@@ -20,7 +21,7 @@ export default {
                     query: 'index',
                     data: {}
                 },
-                component: index
+                component: article
             },
             '/login':{
                 auth:false,

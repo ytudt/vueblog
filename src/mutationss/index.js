@@ -6,10 +6,10 @@ import Vue from 'vue'
 
 var mutationss = {
     SET_STATUS(state) {
-        console.log(22222);
-        state.user = {
-            name:'haha'
-        } //显示菜单
+        // console.log(22222);
+        // state.user = {
+        //     name:'haha'
+        // } //显示菜单
     },
     SIDE_BAR_HIDE(state) {
         state.sideBar = false //关闭菜单
@@ -18,6 +18,9 @@ var mutationss = {
         state.user = user
         console.log(JSON.stringify(user));
         // Tool.localItem('user', JSON.stringify(user))
+    },
+    exitBlog(state){
+         state.user = {};
     },
     SIGNOUT(state) {
         state.user = {}

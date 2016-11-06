@@ -5,7 +5,7 @@
 export default (...arg) => {
     var action = {
             SET_STATUS({ dispatch }) { //显示侧边栏
-                console.log(1111111);
+                // console.log(1111111);
                 dispatch('SET_STATUS')
             },
             SIDE_BAR_HIDE({ dispatch }) { //隐藏菜单
@@ -15,6 +15,10 @@ export default (...arg) => {
                 console.log('action'+user);
                 console.log(user);
                 dispatch('loginSuccess', user)
+            },
+            exitBlog({ dispatch }){
+                console.log(document.cookie)
+                dispatch('exitBlog')
             },
             SIGNOUT({ dispatch }) { //退出
                 dispatch('SIGNOUT')
