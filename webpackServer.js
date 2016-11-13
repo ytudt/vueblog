@@ -6,7 +6,8 @@ const config = require('./webpack.config')
 
 //启动服务
 let server = new WebpackDevServer(webpack(config), {
-    publicPath: config.output.publicPath
+    publicPath: config.output.publicPath,
+    hot: true
 })
 
 let serverUrl = 'http://127.0.0.1:3000';

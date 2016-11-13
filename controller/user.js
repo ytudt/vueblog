@@ -3,7 +3,9 @@ const User = require('../models').User;
 const Tools = require('../utils/index.js');
 const Q = require('q');
 const ValidataFunc = require('../utils/validator.js');
-
+const formidable = require('formidable');
+const fs = require('fs')
+const path = require('path')
 let BreakSignal = Tools.BreakSignal
 
 exports.doRegister = (req, res, next) => {
@@ -118,5 +120,46 @@ exports.exitBlog = (req, res, next) => {
             statusCode: 404
         });
     }
+
+}
+exports.uploadAvatar = (req, res, next) => {
+    console.log('====================================================')
+    console.log(req.sessionStore.sessions )
+     console.log('====================================================')
+    // console.log(req.session.userInfo._id)
+    let form = new formidable.IncomingForm();
+    form.uploadDir = './userAvatar';
+    form.parse(req, function(err, fields, files) {
+          console.log('======+++++++++++++++++++++++++++++++==============================================')
+    console.log(fields )
+     console.log('+++++++++++++++++++++++++++++++====================================================')
+        if (err) {
+            //
+            return res.json({
+                code: '0',
+                msg: 'failed'
+            });
+        }
+        // console.log(files.file);
+        let tempPath = files.file.path;
+        let extName = path.extname(files.file.name);
+        let newPath = tempPath + extName;
+
+        fs.rename(tempPath, newPath, function(err, data) {
+           if(!err){
+            User.setAvatar(fields._id,newPath)
+            .then(function(data){
+                 res.json({
+                        statusCode: 200,
+                        user: data
+                    })
+            })
+
+           }
+
+        });
+
+    });
+
 
 }
