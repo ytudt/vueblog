@@ -82,7 +82,14 @@ export default{
 
     }
   },
+  created(){
+  console.log('created'+(+new Date()))
+
+  },
+  init(){console.log('init'+(+new Date()))},
+  compiled(){console.log('compiled'+(+new Date()))},
   ready(){
+    console.log('ready'+(+new Date()))
     let vm=this;
     fectchDate.doGet(this,'/showArticle?tab=node')
     .then(function(data){
