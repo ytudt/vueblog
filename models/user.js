@@ -42,7 +42,7 @@ exports.newAndSave = (userName, passWord, email) => {
  */
 exports.getUserByLoginName = (userName) => {
     var defer = Q.defer();
-    User.findOne({ 'userName':userName }, function(err, data) {
+    User.findOne({ 'userName': userName }, function(err, data) {
         if (!err) {
             // console.log('yonghuming'+data)
             defer.resolve(data);
@@ -61,9 +61,9 @@ exports.getUserByLoginName = (userName) => {
  */
 exports.getUserByEmail = (email) => {
     var defer = Q.defer();
-    User.findOne({ 'email':email }, function(err, data) {
+    User.findOne({ 'email': email }, function(err, data) {
         if (!err) {
-            console.log('youxiagn'+data);
+            console.log('youxiagn' + data);
             defer.resolve(data);
         } else {
             defer.reject(err);
@@ -116,21 +116,21 @@ exports.qGetUserByMail = function(email) {
  * 根据用户名更新头像
  * Callback:
  * - err, 数据库异常
- * - lologinname, 用户名
- * - avatar, 头像路径
- * @param {Function} callback 回调函数
+ * - _id, 用户id
+ * - newPath, 头像路径
+ *
  */
-exports.setAvatar = function(lologinname, newPath, callback) {
-    getUserByloginname(lologinname, function(err, data) {
-            if (err || !data) {
-                return callback(err);
+exports.setAvatar = function(id, newPath) {
+    var defer = Q.defer();
+    User.findOne({ _id: id }, (err, data) => {
+        data.avatar = newPath;
+        data.save((err,data)=>{
+            if(!err){
+                defer.resolve(data);
+            }else{
+                defer.reject(err);
             }
-            data.avatar = newPath;
-            data.save(callback)
         })
-        // let user = new User();
-        // user.loginname = loginname;
-        // user.passWord = passWord;
-        // user.email = email;
-        // User.update({"_id" : data._id},{$set:{"avatar":data.avatar}});
+    });
+     return defer.promise;
 }

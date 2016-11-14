@@ -12,7 +12,6 @@
             <img :src='user.avatar' alt="我的头像">
             <span v-on:click="exit()">退出</span>
             <span>发表文章</span>
-            <!-- <img :src='userAvatar' alt="我的头像"> -->
         </div>
         <div v-show="!user.userName">
             <button class="fr" v-link="'/register'">注册</button>
@@ -25,6 +24,8 @@
     width: 100%;
     height: 50px;
     background: rgba(0, 0, 0, .5);
+    position: absolute;
+
 }
 
 .header .menus {
@@ -38,7 +39,7 @@
     width: 25%;
     height: 100%;
     line-height: 50px;
-    color: #fff;
+     color: #ccc;
     font-size: 30px;
     text-align: center;
 }

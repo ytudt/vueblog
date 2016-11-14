@@ -1,9 +1,14 @@
 'use strict'
+const fs = require('fs')
+const path = require('path')
+
+const Q = require('q');
+const co = require('co');
+const ValidataFunc = require('../utils/validator.js');
+const formidable = require('formidable');
 const User = require('../models').User;
 const Tools = require('../utils/index.js');
-const Q = require('q');
-const ValidataFunc = require('../utils/validator.js');
-
+const promiseUtils = require('../utils/promise.js');
 let BreakSignal = Tools.BreakSignal
 
 exports.doRegister = (req, res, next) => {
@@ -108,15 +113,91 @@ exports.doLogin = (req, res, next) => {
 
 }
 exports.exitBlog = (req, res, next) => {
-    if (req.session.userInfo) {
-        req.session.userInfo = '';
-        res.send({
-            statusCode: 200
-        });
-    } else {
-        res.send({
-            statusCode: 404
-        });
+        if (req.session.userInfo) {
+            req.session.userInfo = '';
+            res.send({
+                statusCode: 200
+            });
+        } else {
+            res.send({
+                statusCode: 404
+            });
+        }
+
     }
+    // exports.uploadAvatar = (req, res, next) => {
+    //     let form = new formidable.IncomingForm();
+    //     form.uploadDir = './userAvatar';
+    //     form.parse(req, function(err, fields, files) {
+    //         if (err) {
+    //             return res.json({
+    //                 code: '0',
+    //                 msg: 'failed'
+    //             });
+    //         }
+    //         // console.log(files.file);
+    //         let tempPath = files.file.path;
+    //         let extName = path.extname(files.file.name);
+    //         let newPath = tempPath + extName;
+
+//         fs.rename(tempPath, newPath, function(err, data) {
+//            if(!err){
+//             User.setAvatar(fields._id,newPath)
+//             .then(function(data){
+//                  res.json({
+//                         statusCode: 200,
+//                         user: data
+//                     })
+//             })
+
+//            }
+
+//         });
+
+//     });
+
+
+// }
+
+
+exports.uploadAvatar = (req, res, next) => {
+    let form = new formidable.IncomingForm();
+    form.uploadDir = './userAvatar';
+    form.parse(req, function(err, fields, files) {
+        if (err) {
+            return res.json({
+                statusCode: 400,
+                reason: 'failed'
+            });
+        }
+        let tempPath = files.file.path;
+        let extName = path.extname(files.file.name);
+        let newPath = tempPath + extName;
+
+        co(function*() {
+                let renameResult = promiseUtils.rename(tempPath, newPath);
+                let setAvatar = User.setAvatar(fields._id, newPath);
+                let result = yield [renameResult, setAvatar];
+                return result;
+                console.log(renameResult)
+            })
+            .then((data) => {
+                if (data[0] && data[1] && data[1]._id) {
+                    return res.json({
+                        statusCode: 200,
+                        user: data[1]
+                    })
+                } else {
+                    return res.json({
+                        statusCode: 400,
+                        reason: 'failed'
+                    });
+                }
+            })
+            .catch((err) => {
+                next(err)
+            })
+    });
+
 
 }

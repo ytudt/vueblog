@@ -5,6 +5,8 @@ import route from './route' //路由配置
 // import * as filter from './filter' //过滤器
 import app from './app.vue'
 import './css/reset.css'
+// vue-core-image-upload
+// import VueCoreImageUpload  from './vue.core.image.upload.vue';
 
 
 Vue.use(VueRouter)
