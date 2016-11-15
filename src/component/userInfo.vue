@@ -6,15 +6,14 @@
             <button type='button' @click.stop="doPost">上传</button>
         </div>
         <div>
-             <img :src="avatarPreview" alt="">
+             <img  :src="avatarPreview" alt="">
         </div>
 
 
         </div>
         <div class="userInfoWrap">
             <div class="baseInfo">
-                <!-- <img @click="showAvatarUpload" class="userAvatar" :src='userAvatar' alt="我的头像"> -->
-                <img @click="showAvatarUpload"  :src='user.avatar' class="userAvatar" alt="我的头像">
+                <img  v-img-error @click="showAvatarUpload"  :src='user.avatar' class="userAvatar" alt="我的头像">
                 <span>{{user.userName}}</span>
                 <span>{{user.email}}</span>
             </div>

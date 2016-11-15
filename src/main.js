@@ -4,6 +4,7 @@ import VueResource from 'vue-resource'
 import route from './route' //路由配置
 // import * as filter from './filter' //过滤器
 import app from './app.vue'
+import {imgError} from './directive'
 import './css/reset.css'
 // vue-core-image-upload
 // import VueCoreImageUpload  from './vue.core.image.upload.vue';
@@ -11,6 +12,7 @@ import './css/reset.css'
 
 Vue.use(VueRouter)
 Vue.use(VueResource)
+Vue.directive('img-error',imgError);
 // // Object.keys(filter).forEach(k => Vue.filter(k, filter[k])) //注册过滤器
 
 

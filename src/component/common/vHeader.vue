@@ -9,7 +9,7 @@
         </ul>
         <div class="userInfo" v-show="user.userName" v-link="'/userInfo'">
             <span>欢迎:{{user.userName}}</span>
-            <img :src='user.avatar' alt="我的头像">
+            <img v-img-error :src='user.avatar' alt="我的头像">
             <span v-on:click="exit()">退出</span>
             <span>发表文章</span>
         </div>

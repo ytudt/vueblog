@@ -138,6 +138,7 @@ export default {
             ...this.events
 
         });
+          console.log(this.fileUploader)
         this.$on(UploadActions.DOPOST, this._uploadAll);
         this.$on(UploadActions.DOABORT, this._abortUpload);
     },
