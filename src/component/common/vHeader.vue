@@ -101,7 +101,6 @@ export default {
             let vm = this;
             fectchDate.doGet(this, '/showArticle?tab=' + menu.title)
                 .then(function(data) {
-                    console.log(data);
                     vm.$router.go('/');
                     vm.loginSuccess(data.body.user);
                 })
@@ -110,12 +109,11 @@ export default {
           let vm=this;
             fectchDate.doPost(this, '/exitBlog')
                 .then(function(data) {
-                    console.log(data);
                     if(data.body.statusCode===200){
+                        vm.$route.router.go('/');
                       vm.exitBlog();
+
                     }
-                    // vm.$router.go('/');
-                    // vm.loginSuccess(data.body.user);
 
                 })
 

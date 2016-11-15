@@ -70,7 +70,9 @@ import store from '../vuex/store'
 import actions from '../actions/'
 import VueFileUpload from './vue-file-upload.vue';
 import UploadActions from '../config/msg.js';
+import mixins from '../mixin'
 export default {
+     mixins: [mixins('')],
     store,
     vuex: {
         getters: {
