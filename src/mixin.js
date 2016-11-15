@@ -2,7 +2,7 @@
 * @Author: Administrator
 * @Date:   2016-10-25 21:12:09
 * @Last Modified by:   Administrator
-* @Last Modified time: 2016-11-15 11:42:13
+* @Last Modified time: 2016-11-15 15:49:14
 */
 
 'use strict';
@@ -10,7 +10,7 @@
 import store from './vuex/store'
 import actions from './actions/'
 import components from './component/common/'
-
+var time;
 export default function (name = '') {
     return {
         components,
@@ -28,12 +28,14 @@ export default function (name = '') {
         //         default: '全部'
         //     }
         // },
+        beforeCreate(){
+            time=+new Date
+        },
         created() {
-            console.log('created')
             //鉴定页面权限
-            if(this.$route.auth&&!store.state.user._id){
-                this.$route.router.go('/');
-            }
+            // if(this.$route.auth&&!store.state.user._id){
+            //     this.$route.router.go('/');
+            // }
             // console.log(this.$route);
             // if (this.state.path != this.$route.path) { //判断当前组件路径和state路径是否一致，否则重置
             //     this.RESET(this.$route.path) //重置当前页面路径状态

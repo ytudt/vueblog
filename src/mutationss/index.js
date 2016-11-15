@@ -16,11 +16,13 @@ var mutationss = {
     },
     loginSuccess(state, user) {
         state.user = user
+        sessionStorage.setItem('user', JSON.stringify(user));
         console.log(JSON.stringify(user));
         // Tool.localItem('user', JSON.stringify(user))
     },
     exitBlog(state){
          state.user = {};
+         sessionStorage.removeItem('user');
     },
     SIGNOUT(state) {
         state.user = {}

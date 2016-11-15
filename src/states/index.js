@@ -2,7 +2,7 @@
 
 var states = {}
 
-states.user =  {
+states.user =sessionStorage.getItem('user')?JSON.parse(sessionStorage.getItem('user')): {
 } //当前登录的用户信息
 states.articleList=[];
 
